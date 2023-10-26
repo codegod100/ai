@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "quickstart"
+version = "0.1.0"
+description = ""
+authors = ["V <veronika.m.winters@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+langchain = "^0.0.323"
+openai = "^0.28.1"
+playwright = "^1.39.0"
+beautifulsoup4 = "^4.12.2"
+fireworks-ai = "^0.6.0"
+unstructured = "^0.10.26"
+markdown = "^3.5"
+chromadb = "^0.4.15"
+tiktoken = "^0.5.1"
+faiss-cpu = "^1.7.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
