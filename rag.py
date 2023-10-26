@@ -5,6 +5,10 @@ from langchain.vectorstores import FAISS
 from langchain.document_loaders import UnstructuredMarkdownLoader
 from langchain.document_loaders import DirectoryLoader
 from langchain.chat_models.fireworks import ChatFireworks
+from langchain.vectorstores import LanceDB
+from langchain.chat_models import ChatOpenAI
+
+import lancedb
 
 from langchain.agents.agent_toolkits import (
     create_vectorstore_agent,
@@ -13,20 +17,19 @@ from langchain.agents.agent_toolkits import (
 )
 
 
-llm = ChatFireworks(model="accounts/fireworks/models/mistral-7b")
-path = "/home/vera/agora/garden/flancian"
-loader = DirectoryLoader(path, glob="**/*.md")
-data = loader.load()
-text_splitter = CharacterTextSplitter(chunk_size=200, chunk_overlap=0)
-documents = text_splitter.split_documents(data)
-db = FAISS.from_documents(documents, OpenAIEmbeddings())
+# llm = ChatFireworks(model="accounts/fireworks/models/mistral-7b")
+llm=ChatOpenAI(temperature=1)
+db = lancedb.connect('.lance-data')
+table = db.open_table('journal')
+db = LanceDB(table, OpenAIEmbeddings())
+
 
 vectorstore_info = VectorStoreInfo(
     name="flancian's journal",
     description="collection of markdown files containing flancian's daily journal",
     vectorstore=db,
 )
-query = "What does flancian think about Avalokiteśvara?"
+query = "describe the pure land of flancia"
 
 toolkit = VectorStoreToolkit(vectorstore_info=vectorstore_info)
 
